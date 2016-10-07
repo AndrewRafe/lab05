@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Andrew Rafe/Desktop/lab05/Content/Models/Obstacle/obstacle.fbx</SourceFile>
-  <SourceTime>2016-10-07T13:39:18.0083876+11:00</SourceTime>
-  <DestFile>C:/Users/Andrew Rafe/Desktop/lab05/Content/bin/Windows/Models/Obstacle/obstacle.xnb</DestFile>
-  <DestTime>2016-10-07T13:55:42.2115183+11:00</DestTime>
+  <SourceFile>C:/Users/Andrew Rafe/Desktop/lab05/Content/Models/Bullet/cannonBall.fbx</SourceFile>
+  <SourceTime>2016-10-07T11:03:12.9874061+11:00</SourceTime>
+  <DestFile>C:/Users/Andrew Rafe/Desktop/lab05/Content/bin/Windows/Models/Bullet/cannonBall.xnb</DestFile>
+  <DestTime>2016-10-07T15:57:17.8261878+11:00</DestTime>
   <Importer>FbxImporter</Importer>
   <ImporterTime>2016-03-30T17:36:08+11:00</ImporterTime>
   <Processor>ModelProcessor</Processor>
@@ -46,7 +46,7 @@
   </Parameters>
   <Parameters>
     <Key>RotationY</Key>
-    <Value>180</Value>
+    <Value>0</Value>
   </Parameters>
   <Parameters>
     <Key>RotationZ</Key>
@@ -54,7 +54,7 @@
   </Parameters>
   <Parameters>
     <Key>Scale</Key>
-    <Value>20</Value>
+    <Value>3</Value>
   </Parameters>
   <Parameters>
     <Key>SwapWindingOrder</Key>

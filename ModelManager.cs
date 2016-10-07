@@ -28,6 +28,10 @@ namespace lab05 {
 
         }
 
+        /// <summary>
+        /// Will add a model to the list of models
+        /// </summary>
+        /// <param name="model">The model to be added to the model manager</param>
         public void AddModel(BasicModel model) {
             models.Add(model);
         }
@@ -62,7 +66,7 @@ namespace lab05 {
         public override void Draw(GameTime gameTime) {
 
             foreach (BasicModel model in models) {
-                model.Draw(GetCamera());
+                model.Draw(GetCamera(), gameTime);
             }
 
             base.Draw(gameTime);

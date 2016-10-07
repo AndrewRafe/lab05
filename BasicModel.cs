@@ -14,16 +14,17 @@ namespace lab05 {
     /// </summary>
     public class BasicModel {
 
-        public Model model { get; protected set; }
+        public Model model { get; private set; }
+        public Vector3 position { get; set; }
+        public Quaternion rotation { get; private set; }
+        public Matrix rotationMatrix { get; private set; }
         protected Matrix world = Matrix.Identity;
-        protected Vector3 position;
-
-        public Quaternion rotation;
 
         /// <summary>
         /// Constructor method for the basic model class that takes a model
         /// </summary>
-        /// <param name="m"></param>
+        /// <param name="m">The Model</param>
+        /// <param name="position">The position of the model</param>
         public BasicModel(Model m, Vector3 position) {
             model = m;
             this.position = position;
@@ -33,6 +34,7 @@ namespace lab05 {
         /// <summary>
         /// Update method to be overriden by classes that derive BasicModel
         /// </summary>
+        /// <param name="gameTime">A reference to the Game Time</param>
         public virtual void Update(GameTime gameTime) {
 
         }
@@ -40,19 +42,18 @@ namespace lab05 {
         /// <summary>
         /// Basic draw method for a generic model object
         /// </summary>
-        /// <param name="camera"></param>
-        public virtual void Draw(Camera camera) {
+        /// <param name="camera">A reference to the camera</param>
+        public virtual void Draw(Camera camera, GameTime gameTime) {
 
             Matrix[] transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);
-            Matrix worldMatrix = GetWorldMatrix();
 
             foreach (ModelMesh mesh in model.Meshes) {
                 foreach (BasicEffect effect in mesh.Effects) {
                     effect.EnableDefaultLighting();
                     effect.Projection = camera.projection;
                     effect.View = camera.view;
-                    effect.World = worldMatrix * mesh.ParentBone.Transform;
+                    effect.World = GetWorldMatrix() * mesh.ParentBone.Transform;
                 }
                 mesh.Draw();
             }
@@ -62,9 +63,8 @@ namespace lab05 {
         /// Method to retrieve the world matrix for this object
         /// Method can be overriden by classes that derive the Basic Model Class
         /// </summary>
-        /// <returns>worldMatrix</returns>
+        /// <returns>The World Matrix</returns>
         public virtual Matrix GetWorldMatrix() {
-            Matrix world;
             world = Matrix.CreateFromQuaternion(rotation) * Matrix.CreateTranslation(position);
             return world;
         }
@@ -74,7 +74,7 @@ namespace lab05 {
         /// </summary>
         /// <param name="otherModel"></param>
         /// <param name="otherWorld"></param>
-        /// <returns></returns>
+        /// <returns>A boolean specifying whether this model has collided with another given model</returns>
         public bool CollidesWith(Model otherModel, Matrix otherWorld) {
             //Loop through each model meash in both objects and compare all the bounding spheres
             //for collisions
@@ -89,23 +89,16 @@ namespace lab05 {
         }
 
         /// <summary>
-        /// Creates a quaternion to face the direction of another position in the world
-        /// Is a static method so both the objects position and the target position must be provided
+        /// Will set the rotation of this object to face another given position
         /// </summary>
-        /// <param name="objectPosition">The current position of the model</param>
         /// <param name="targetPosition">The position that the object would like to face</param>
-        /// <param name="up">The up vector of the object that you are hoping to rotate</param>
-        /// <returns>A Quaternion of the direction that is needed to face the position</returns>
-        public static Quaternion RotateToFace(Vector3 objectPosition, Vector3 targetPosition, Vector3 up) {
-            Vector3 direction = (objectPosition - targetPosition);
-            Vector3 relativeRight = Vector3.Cross(up, direction);
-            Vector3.Normalize(ref relativeRight, out relativeRight);
-            Vector3 relativeBackwards = Vector3.Cross(relativeRight, up);
-            Vector3.Normalize(ref relativeBackwards, out relativeBackwards);
-            Vector3 newUp = Vector3.Cross(relativeBackwards, relativeRight);
-            Matrix rot = new Matrix(relativeRight.X, relativeRight.Y, relativeRight.Z, 0, newUp.X, newUp.Y, newUp.Z, 0, relativeBackwards.X, relativeBackwards.Y, relativeBackwards.Z, 0, 0, 0, 0, 1);
-            Quaternion rotation = Quaternion.CreateFromRotationMatrix(rot);
-            return rotation;
+        /// <param name="up">The up vector of the object</param>
+        public void RotateToFace(Vector3 targetPosition, Vector3 up) {
+
+            rotation = Behavior.TurnToFace(rotation, Behavior.RotateToFace(position, targetPosition, up), 0.1f);
+            rotationMatrix = Matrix.CreateFromQuaternion(rotation);
+            //rotation = Behavior.RotateToFace(position, targetPosition, up);
+
         }
 
         /// <summary>

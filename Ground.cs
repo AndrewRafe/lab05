@@ -11,30 +11,21 @@ namespace lab05 {
     /// The ground plane of the world
     /// Inherits from the basic model class
     /// </summary>
-    class Ground : BasicModel {
+    public class Ground : BasicModel {
 
 
         //A plane that specifies the level that the ground plane is on
-        public Plane groundPlane;
+        public Plane groundPlane { get; private set; }
 
         /// <summary>
         /// Constructor method for the ground. Takes a model and a center position
         /// for the ground plane
         /// </summary>
-        /// <param name="m"></param>
-        /// <param name="position"></param>
+        /// <param name="m">The model of the ground plane</param>
+        /// <param name="position">The center position of the ground plane</param>
         public Ground(Model m, Vector3 position) : base(m, position) {
             groundPlane = new Plane(Vector3.UnitY, position.Y);
         }
 
-        /// <summary>
-        /// Overrides the getter method for the world matrix of the ground
-        /// </summary>
-        /// <returns></returns>
-        public override Matrix GetWorldMatrix() {
-            Matrix world;
-            world = base.GetWorldMatrix();
-            return world;
-        }
     }
 }

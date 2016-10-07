@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Andrew Rafe/documents/visual studio 2015/Projects/lab05/lab05/Content/Models/Tank/engine_diff_tex.tga</SourceFile>
-  <SourceTime>2016-09-14T16:45:24.3385343+10:00</SourceTime>
-  <DestFile>C:/Users/Andrew Rafe/documents/visual studio 2015/Projects/lab05/lab05/Content/bin/Windows/Models/Tank/engine_diff_tex_0.xnb</DestFile>
-  <DestTime>2016-09-15T11:53:45.3268089+10:00</DestTime>
+  <SourceFile>C:/Users/Andrew Rafe/Desktop/lab05/Content/Models/Tank/engine_diff_tex.tga</SourceFile>
+  <SourceTime>2016-10-07T13:39:18.0708977+11:00</SourceTime>
+  <DestFile>C:/Users/Andrew Rafe/Desktop/lab05/Content/bin/Windows/Models/Tank/engine_diff_tex_0.xnb</DestFile>
+  <DestTime>2016-10-07T13:55:44.6031337+11:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T17:36:08+11:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

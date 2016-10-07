@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace lab05 {
     /// <summary>
@@ -11,14 +13,16 @@ namespace lab05 {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public static int GAME_WIDTH = 800;
-        public static int GAME_HEIGHT = 800;
+        public static int GAME_WIDTH = 1000;
+        public static int GAME_HEIGHT = 1000;
+        public static float TILE_SIZE = 50.0f;
 
         public Camera mainCamera { get; private set; }
         public ModelManager modelManager { get; private set; }
         private Ground ground;
 
-        private Random rand;
+        public Random rand;
+        private Grid grid;
 
         MouseState mouseState;
         MouseState prevMouseState;
@@ -26,12 +30,15 @@ namespace lab05 {
 
 
         private Tank player;
-        private Tank enemy;
+        private NPC enemy;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
+            graphics.PreferredBackBufferWidth = 960;
+            graphics.PreferredBackBufferHeight = 540;
+            graphics.IsFullScreen = false;
             rand = new Random();
         }
 
@@ -43,20 +50,23 @@ namespace lab05 {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-            mainCamera = new Camera(this, new Vector3(0, 200, 75), Vector3.Zero, Vector3.Up);
+            grid = new Grid(TILE_SIZE, GAME_WIDTH / (int)TILE_SIZE, GAME_HEIGHT / (int)TILE_SIZE, Vector3.Zero);
+            grid.GenerateGrid(rand, Content.Load<Model>(@"Models/Obstacle/obstacle"));
+            mainCamera = new Camera(this, new Vector3(0, 600, 100), Vector3.Zero, Vector3.UnitY);
             Components.Add(mainCamera);
             modelManager = new ModelManager(this);
             Components.Add(modelManager);
-            ground = new Ground(Content.Load<Model>(@"Ground/ground"), Vector3.Zero);
+            ground = new Ground(Content.Load<Model>(@"Ground/ground"), new Vector3(0, 0, -TILE_SIZE/2));
             modelManager.AddModel(ground);
 
-            player = new Tank(Content.Load<Model>(@"Models/Tank/tank"), new Vector3(0,0,0));
+            player = new Tank(Content.Load<Model>(@"Models/Tank/tank"), new Vector3(0,0,0), this, enemy);
             modelManager.AddModel(player);
-            enemy = new lab05.Tank(Content.Load<Model>(@"Models/Tank/tank"), new Vector3(300, 0, 300));
+
+            enemy = new NPC(Content.Load<Model>(@"Models/Tank/tank"), new Vector3(300, 0, 300), player, grid, this);
             modelManager.AddModel(enemy);
 
-            GenerateObstacles(6);
-
+            
+            Debug.Write(grid.ToString());
             base.Initialize();
         }
 
@@ -91,13 +101,17 @@ namespace lab05 {
             // TODO: Add your update logic here
             mouseState = Mouse.GetState();
             if (mouseState.LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released) {
-                player.SetTargetPosition(PickedPosition());
+                player.SetTargetPosition(grid.PickedTile(new Vector3(player.position.X, player.position.Y, player.position.Z)), grid.PickedTile(PickedPosition()), grid);
             }
 
-            if (player.CollidesWith(enemy.model, enemy.GetWorldMatrix())) {
-                enemy.TankDestroyed();
+            // DEBUG: Right CLick to print the tile clicked to the debug 
+            if (mouseState.RightButton == ButtonState.Pressed && prevMouseState.RightButton == ButtonState.Released) {
+                Debug.WriteLine(grid.PickedTile(PickedPosition()).ToString());
+                Debug.WriteLine("Tank at position: " + grid.PickedTile(player.GetPosition()) + " " + player.ToString());
             }
-            enemy.SetTargetPosition(Behavior.PursueTargetPosition(player.GetPosition(), player.GetVelocityVector(), gameTime, 3));
+
+            //Debug.WriteLine(player.GetPosition().ToString());
+            prevMouseState = mouseState;
 
             base.Update(gameTime);
         }
@@ -110,7 +124,7 @@ namespace lab05 {
             GraphicsDevice.Clear(Color.Gray);
 
             // TODO: Add your drawing code here
-
+            grid.Draw(PickedPosition(), mainCamera, gameTime);
             base.Draw(gameTime);
         }
 
@@ -141,14 +155,5 @@ namespace lab05 {
             }
         }
 
-        /// <summary>
-        /// Randomly generates a given number of obstacles
-        /// </summary>
-        /// <param name="numObstacles"></param>
-        private void GenerateObstacles(int numObstacles) {
-            for (int i = 0; i < numObstacles; i++) {
-                modelManager.AddModel(new Obstacle(Content.Load<Model>(@"Models/Obstacle/obstacle"), new Vector3(rand.Next(GAME_WIDTH) - GAME_WIDTH/2, rand.Next(GAME_HEIGHT) - GAME_HEIGHT / 2, 0)));
-            }
-        }
     }
 }

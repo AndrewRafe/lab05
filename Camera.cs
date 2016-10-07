@@ -17,9 +17,9 @@ namespace lab05 {
         /// <summary>
         /// Constants controlling limitations on camera movement
         /// </summary>
-        private static float SCROLL_SPEED = 10.0f;
-        private static float MAX_ZOOM = 600.0f;
-        private static float MIN_ZOOM = 200.0f;
+        private static float SCROLL_SPEED = 100.0f;
+        private static float MAX_ZOOM = 1.0f;
+        private static float MIN_ZOOM = 1.0f;
 
         /// <summary>
         /// View and Projection matrices for the camera
@@ -109,18 +109,6 @@ namespace lab05 {
                 cameraPosition -= Vector3.Cross(cameraUp, cameraDirection) * speed * (new Vector3(1, 0, 1));
             }
 
-
-            //ZOOMING IN AND OUT
-            if (Mouse.GetState().ScrollWheelValue < prevMouseState.ScrollWheelValue) {
-                if (cameraPosition.Y <= MAX_ZOOM) {
-                    cameraPosition = new Vector3(cameraPosition.X, cameraPosition.Y + zoomInterval, cameraPosition.Z);
-                }
-            }
-            else if (Mouse.GetState().ScrollWheelValue > prevMouseState.ScrollWheelValue) {
-                if (cameraPosition.Y >= MIN_ZOOM) {
-                    cameraPosition = new Vector3(cameraPosition.X, cameraPosition.Y - zoomInterval, cameraPosition.Z);
-                }
-            }
 
             prevMouseState = Mouse.GetState();
 
