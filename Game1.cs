@@ -36,8 +36,8 @@ namespace lab05 {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
-            graphics.PreferredBackBufferWidth = 960;
-            graphics.PreferredBackBufferHeight = 540;
+            graphics.PreferredBackBufferWidth = 1900;
+            graphics.PreferredBackBufferHeight = 1000;
             graphics.IsFullScreen = false;
             rand = new Random();
         }
@@ -153,6 +153,15 @@ namespace lab05 {
             else {
                 return Vector3.Zero;
             }
+        }
+
+        /// <summary>
+        /// Private helper method to conver the mouse picked position to the global coordinate system
+        /// </summary>
+        /// <param name="pickedPosition">The picked position of the mouse</param>
+        /// <returns>The fix to fit the global coordinate system</returns>
+        public static Vector3 PickedPositionTranslation(Vector3 pickedPosition) {
+            return new Vector3(pickedPosition.X, -pickedPosition.Z, pickedPosition.Y);
         }
 
     }

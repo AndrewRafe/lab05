@@ -11,6 +11,7 @@ namespace lab05 {
 
         private const float DEFAULT_HEALTH = 100.0f;
         private const float CRITICAL_HEALTH = 20.0f;
+        private const int LURE_RANGE = 300;
         private const String STATE_IDLE = "IDLE";
         private const String STATE_CHASE = "CHASE";
         private const String STATE_EVADE = "EVADE";
@@ -30,26 +31,21 @@ namespace lab05 {
         }
 
         public override void Update(GameTime gameTime) {
+            
             if (currentState == STATE_IDLE) {
-                if (CanSeePlayer()) {
-                    currentState = STATE_CHASE;
-                }
-            } else if (currentState == STATE_CHASE) {
-                this.SetTargetPosition(grid.PickedTile(this.position), grid.PickedTile(player.position), grid);
                 if (WithinRangeOfPlayer()) {
-                    currentState = STATE_SHOOT;
-                } else if (CriticalHealth()) {
-                    currentState = STATE_EVADE;
-                }
-            } else if (currentState == STATE_SHOOT) {
-                this.FireWeapon(gameTime);
-                if (!WithinRangeOfPlayer()) {
                     currentState = STATE_CHASE;
-                } else if (CriticalHealth()) {
+                } 
+            } else if (currentState == STATE_CHASE) {
+                SetTargetPosition(grid.PickedTile(position), grid.PickedTile(player.position), grid);
+                if (this.CollidesWith(player.model, player.GetWorldMatrix())) {
                     currentState = STATE_EVADE;
                 }
             } else if (currentState == STATE_EVADE) {
-
+                SetTargetPosition(grid.PickedTile(position), Behavior.EvadeToTile(grid.PickedTile(position),grid.PickedTile(player.position)), grid);
+                if (!WithinRangeOfPlayer()) {
+                    currentState = STATE_IDLE;
+                }
             }
             base.Update(gameTime);
         }
@@ -68,7 +64,7 @@ namespace lab05 {
         /// </summary>
         /// <returns></returns>
         private bool WithinRangeOfPlayer() {
-            if (Vector3.Distance(position, player.position) < 200) {
+            if (Vector3.Distance(position, player.position) < LURE_RANGE) {
                 return true;
             } else {
                 return false;

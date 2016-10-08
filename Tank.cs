@@ -78,12 +78,8 @@ namespace lab05 {
                 if (isDestroyed == false) {
                     Vector3 nextTargetPosition = new Vector3(targetCheckpointPositions.First.Value.centerPosition.X, targetCheckpointPositions.First.Value.centerPosition.Z, targetCheckpointPositions.First.Value.centerPosition.Y);
                     RotateToFace(nextTargetPosition, Vector3.UnitY);
-                    if (targetCheckpointPositions.Count == 1) {
-                        position = Behavior.ArrivalSteering(position, nextTargetPosition, gameTime, speed, 50);
-                    } else {
-                        position = Behavior.StraightLineChase(position, nextTargetPosition, gameTime, speed);
-                    }
-                    if (Math.Abs(position.X - nextTargetPosition.X) <= 5 && Math.Abs(position.Z - nextTargetPosition.Z) <= 5) {
+                    position = Behavior.StraightLineChase(position, nextTargetPosition, gameTime, speed);
+                    if (Math.Abs(position.X - nextTargetPosition.X) <= 30 && Math.Abs(position.Z - nextTargetPosition.Z) <= 30) {
                         targetCheckpointPositions.RemoveFirst();
                     }
                 }
@@ -111,7 +107,7 @@ namespace lab05 {
         /// </summary>
         /// <returns>The velocity of the tank</returns>
         public Vector3 GetVelocityVector() {
-            return position - prevPosition;
+            return new Vector3(position.X, position.Y, position.Z) - (new Vector3(prevPosition.X, prevPosition.Y, position.Z));
         }
 
         /// <summary>
@@ -127,7 +123,7 @@ namespace lab05 {
 
         public void FireWeapon(GameTime gameTime) {
             if (millisecondsSinceLastShot >= rateOfFire) {
-                bulletsFired.AddModel(new Bullet(game.Content.Load<Model>(@"Models/Bullet/cannonBall"), new Vector3(position.X, -position.Z, position.Y), targetTank, gameTime, 10.0f));
+                bulletsFired.AddModel(new Bullet(game.Content.Load<Model>(@"Models/Bullet/bullet"), new Vector3(position.X, position.Y, position.Z), targetTank, gameTime, 10.0f));
                 millisecondsSinceLastShot = 0;
             }
         }

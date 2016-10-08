@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Andrew Rafe/Desktop/lab05/Content/Models/Tank/tank.fbx</SourceFile>
-  <SourceTime>2016-10-07T13:39:18.1238678+11:00</SourceTime>
-  <DestFile>C:/Users/Andrew Rafe/Desktop/lab05/Content/bin/Windows/Models/Tank/tank.xnb</DestFile>
-  <DestTime>2016-10-07T22:55:41.6232908+11:00</DestTime>
+  <SourceFile>C:/Users/Andrew Rafe/Desktop/lab05/Content/Models/Tank/dummyTank.FBX</SourceFile>
+  <SourceTime>2016-10-07T11:03:12.9834238+11:00</SourceTime>
+  <DestFile>C:/Users/Andrew Rafe/Desktop/lab05/Content/bin/Windows/Models/Tank/dummyTank.xnb</DestFile>
+  <DestTime>2016-10-07T21:25:11.954002+11:00</DestTime>
   <Importer>FbxImporter</Importer>
   <ImporterTime>2016-03-30T17:36:08+11:00</ImporterTime>
   <Processor>ModelProcessor</Processor>
@@ -46,7 +46,7 @@
   </Parameters>
   <Parameters>
     <Key>RotationY</Key>
-    <Value>180</Value>
+    <Value>0</Value>
   </Parameters>
   <Parameters>
     <Key>RotationZ</Key>
@@ -54,7 +54,7 @@
   </Parameters>
   <Parameters>
     <Key>Scale</Key>
-    <Value>0.07</Value>
+    <Value>10</Value>
   </Parameters>
   <Parameters>
     <Key>SwapWindingOrder</Key>
@@ -65,9 +65,6 @@
     <Value>DxtCompressed</Value>
   </Parameters>
   <Dependencies />
-  <BuildAsset>
-    <string>C:/Users/Andrew Rafe/Desktop/lab05/Content/bin/Windows/Models/Tank/turret_alt_diff_tex_0.xnb</string>
-    <string>C:/Users/Andrew Rafe/Desktop/lab05/Content/bin/Windows/Models/Tank/engine_diff_tex_0.xnb</string>
-  </BuildAsset>
+  <BuildAsset />
   <BuildOutput />
 </PipelineBuildEvent>

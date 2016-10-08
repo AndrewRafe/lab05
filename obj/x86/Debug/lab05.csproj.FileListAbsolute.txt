@@ -97,3 +97,4 @@ C:\Users\Andrew Rafe\Desktop\lab05\bin\Windows\x86\Debug\SharpDX.RawInput.xml
 C:\Users\Andrew Rafe\Desktop\lab05\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
 C:\Users\Andrew Rafe\Desktop\lab05\obj\x86\Debug\lab05.csprojResolveAssemblyReference.cache
 C:\Users\Andrew Rafe\Desktop\lab05\bin\Windows\x86\Debug\Content\Models\Bullet\cannonBall.xnb
+C:\Users\Andrew Rafe\Desktop\lab05\bin\Windows\x86\Debug\Content\Models\Tank\dummyTank.xnb

@@ -12,33 +12,14 @@ namespace lab05 {
     /// </summary>
     public class Behavior {
 
-        public static Vector3 EvadeLocation(Vector3 currentPosition, Vector3 targetPosition, GameTime gameTime, float speed) {
-            Vector3 newPosition = new Vector3(currentPosition.X, currentPosition.Y, currentPosition.Z);
-
-            //Y position remains unchanged
-            newPosition.Y = currentPosition.Y;
-
-            if (targetPosition.X > currentPosition.X) {
-                newPosition.X = currentPosition.X - speed * gameTime.ElapsedGameTime.Milliseconds / 1000;
+        public static Tile EvadeToTile(Tile currentTile, Tile aggressorTile) {
+            Tile furthestTile = currentTile.adjacentTiles.First();
+            foreach (Tile adjacentTile in currentTile.adjacentTiles) {
+                if (Vector3.Distance(adjacentTile.centerPosition, aggressorTile.centerPosition) > Vector3.Distance(furthestTile.centerPosition, aggressorTile.centerPosition)) {
+                    furthestTile = adjacentTile;
+                }
             }
-            else if (targetPosition.X < currentPosition.X) {
-                newPosition.X = currentPosition.X + speed * gameTime.ElapsedGameTime.Milliseconds / 1000;
-            }
-            else {
-                //Is in the correct X position therefore DO NOTHING
-            }
-
-            if (targetPosition.Y > currentPosition.Y) {
-                newPosition.Y = currentPosition.Y - speed * gameTime.ElapsedGameTime.Milliseconds / 1000;
-            }
-            else if (targetPosition.Y < currentPosition.Y) {
-                newPosition.Y = currentPosition.Y + speed * gameTime.ElapsedGameTime.Milliseconds / 1000;
-            }
-            else {
-                //Is in the correct Z position therefore DO NOTHING
-            }
-
-            return newPosition;
+            return furthestTile;
         }
 
         /// <summary>

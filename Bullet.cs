@@ -39,9 +39,8 @@ namespace lab05 {
         /// Determines the direction that the bullet is going to travel
         /// </summary>
         private void CreateDirectionOfTravel(GameTime gameTime) {
-            //prediction accuracy is based off the distance between the start position and the enemy
-            //The closer the enemy the lower the prediction accuracy must be
-            directionOfTravel = Vector3.Normalize(Behavior.PredictTargetPosition(targetTank.position, targetTank.GetVelocityVector(), gameTime, CalculatePredictionAccuracy()) - position);
+
+            directionOfTravel = Vector3.Normalize(position - targetTank.position);
         }
 
         /// <summary>
@@ -61,20 +60,6 @@ namespace lab05 {
             base.Update(gameTime);
         }
 
-        /*
-        private void CreateDirectionOfTravel(GameTime gameTime)
-        {
-            directionOfTravel = Vector3.Normalize(EstimateCurrentPosition(gameTime) - position);
-        } */
-
-
-        /*
-        public override void Update(GameTime gameTime)
-        {
-            //CreateDirectionOfTravel(gameTime);
-            this.position += directionOfTravel * speed * gameTime.ElapsedGameTime.Milliseconds / 1000;
-            base.Update(gameTime);
-        } */
 
     }
 }

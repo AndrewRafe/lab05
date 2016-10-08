@@ -12,7 +12,7 @@ namespace lab05 {
     /// </summary>
     public class Tile : BasicModel{
 
-        public static int CHANCE_OF_NOT_WALKABLE = 10;
+        public static int CHANCE_OF_NOT_WALKABLE = 3;
         public static float INFINITY_COST = 1000000.0f;
 
         public bool isWalkable { get; private set; }
